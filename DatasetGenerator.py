@@ -37,20 +37,20 @@ class DatasetGenerator:
                 i, j = rng.choice(size, 2, replace=False)
                 arr[i], arr[j] = arr[j], arr[i]
             return arr
-        if dist == "sawtooth":  # several ascending runs back to back
+        if dist == "sawtooth": 
             k = int(min(rng.choice([4, 8, 16, 32]), max(size // 2, 2)))
             parts = np.array_split(rng.integers(0, wide, size), k)
             return np.concatenate([np.sort(p) for p in parts]).tolist()
-        if dist == "sorted_with_tail":  # sorted, then 10% fresh random values appended
+        if dist == "sorted_with_tail":  
             cut = int(size * 0.9)
             return np.concatenate([np.sort(rng.integers(0, wide, cut)), rng.integers(0, wide, size - cut)]).tolist()
-        if dist == "many_duplicates":  # few distinct values in a small range
+        if dist == "many_duplicates": 
             return rng.choice(rng.integers(0, 50, 10), size).tolist()
-        if dist == "few_distinct_wide":  # few distinct values spread over a huge range
+        if dist == "few_distinct_wide": 
             return rng.choice(rng.integers(0, wide, int(rng.integers(5, 21))), size).tolist()
         if dist == "gaussian":
             return np.round(rng.normal(0, 1000, size)).astype(int).tolist()
-        if dist == "skewed":  # heavy repetition plus rare huge outliers
+        if dist == "skewed": 
             a = float(rng.choice([1.3, 1.5, 2.0]))
             return np.minimum(rng.zipf(a, size), wide).tolist()
         raise ValueError(dist)
@@ -61,7 +61,7 @@ class DatasetGenerator:
             timer = timeit.Timer(lambda: func(list(arr)))
             try:
                 times[name] = float(np.median(timer.repeat(repeat=runs, number=1)))
-            except Exception:  # RecursionError, ValueError, TypeError, MemoryError ...
+            except Exception: 
                 times[name] = float("inf")
         return min(times, key=times.get), times
 

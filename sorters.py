@@ -3,7 +3,7 @@
 
 
 def insertion_sort(arr):
-    # Best for small or nearly sorted arrays
+
     for i in range(1, len(arr)):
         key = arr[i]
         j = i - 1
@@ -55,7 +55,7 @@ def merge_sort(arr):
 
 
 def heap_sort(arr):
-    # In-place heap sort, O(n log n) in every case
+
     n = len(arr)
 
     def sift_down(root, end):
@@ -168,10 +168,6 @@ def tim_sort(arr):
         runs = merged
     return arr
 
-
-# MergeSort is deliberately not a candidate: TimSort is a merge sort with run
-# detection, so it is faster in every case we measured. Add "MergeSort": merge_sort
-# below if your report needs it (the model will then correctly never choose it).
 ALGORITHMS = {
     "InsertionSort": insertion_sort,
     "QuickSort": quick_sort,
